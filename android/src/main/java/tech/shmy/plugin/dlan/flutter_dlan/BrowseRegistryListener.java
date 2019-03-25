@@ -35,8 +35,9 @@ public class BrowseRegistryListener extends DefaultRegistryListener {
     public void deviceAdded(Registry registry, Device device) {
         HashMap fd = new HashMap();
         fd.put("name", device.getDetails().getFriendlyName());
-        fd.put("display", device.getDisplayString());
+//        fd.put("display", device.getDisplayString());
         fd.put("uuid", device.getIdentity().getUdn().getIdentifierString());
+        fd.put("ip", device.getDetails().getBaseURL().toString());
         if (flutterDeviceList.indexOf(fd) != -1) {
             return;
         }
@@ -55,5 +56,15 @@ public class BrowseRegistryListener extends DefaultRegistryListener {
     public void deviceRemoved(Registry registry, Device device) {
         super.deviceRemoved(registry, device);
         mDeviceList.remove(device);
+        for (int i = 0; i < flutterDeviceList.size(); i ++) {
+            HashMap m = flutterDeviceList.get(i);
+            if (device.getIdentity().getUdn().getIdentifierString() == m.get("uuid")) {
+                flutterDeviceList.remove(i);
+                break;
+            }
+        }
+        if (BrowseRegistryListener.eventSink != null) {
+            BrowseRegistryListener.eventSink.success(flutterDeviceList);
+        }
     }
 }
