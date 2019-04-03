@@ -7,6 +7,7 @@ import org.fourthline.cling.model.types.UDAServiceType;
 import org.fourthline.cling.registry.DefaultRegistryListener;
 import org.fourthline.cling.registry.Registry;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
