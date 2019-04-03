@@ -31,13 +31,21 @@ public class BrowseRegistryListener extends DefaultRegistryListener {
     ArrayList<HashMap> getDevices() {
         return this.flutterDeviceList;
     }
+    void clearDevices() {
+        this.mDeviceList.clear();
+        this.flutterDeviceList.clear();
+    }
     @Override
     public void deviceAdded(Registry registry, Device device) {
+        URL ip = device.getDetails().getBaseURL();
+        if (ip == null) {
+            return;
+        }
         HashMap fd = new HashMap();
         fd.put("name", device.getDetails().getFriendlyName());
 //        fd.put("display", device.getDisplayString());
         fd.put("uuid", device.getIdentity().getUdn().getIdentifierString());
-        fd.put("ip", device.getDetails().getBaseURL().toString());
+        fd.put("ip", ip.toString());
         if (flutterDeviceList.indexOf(fd) != -1) {
             return;
         }

@@ -129,6 +129,7 @@ public class FlutterDlanPlugin implements MethodCallHandler, StreamHandler {
             this.context.getApplicationContext().unbindService(serviceConnection);
             serviceConnection = null;
             isSearchStrarted = false;
+            browseRegistryListener.clearDevices();
         }
     }
     private void doPlay(Service avtService) {
